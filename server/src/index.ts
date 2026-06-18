@@ -13,9 +13,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({
-  origin: "/*"
-}));
+app.use(
+  cors({
+    origin: '/',
+  }),
+);
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
@@ -37,10 +39,17 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
-  console.error(err);
-  res.status(500).json({ error: err.message || 'Внутренняя ошибка сервера' });
-});
+app.use(
+  (
+    err: Error,
+    _req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction,
+  ) => {
+    console.error(err);
+    res.status(500).json({ error: err.message || 'Внутренняя ошибка сервера' });
+  },
+);
 
 app.listen(PORT, () => {
   console.log(`TechStore API: http://localhost:${PORT}`);
