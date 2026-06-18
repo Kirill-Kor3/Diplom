@@ -124,7 +124,7 @@ router.get('/', authRequired, adminRequired, async (req, res) => {
 
 router.get('/:id', authRequired, adminRequired, async (req, res) => {
   const order = await prisma.order.findUnique({
-    where: { id: parseInt(req.params.id) },
+    where: { id: parseInt(req.params.id as string) },
     include: {
       user: { select: { id: true, name: true, email: true, phone: true } },
       items: { include: { product: true } },
@@ -141,7 +141,7 @@ router.patch('/:id/status', authRequired, adminRequired, async (req, res) => {
     return res.status(400).json({ error: 'Некорректный статус' });
   }
   const order = await prisma.order.update({
-    where: { id: parseInt(req.params.id) },
+    where: { id: parseInt(req.params.id as string) },
     data: { status },
   });
   res.json(order);

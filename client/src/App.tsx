@@ -20,7 +20,7 @@ import AdminUsers from './pages/admin/AdminUsers';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Diplom">
       <AuthProvider>
         <CartProvider>
           <Routes>

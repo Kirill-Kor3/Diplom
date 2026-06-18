@@ -76,7 +76,7 @@ router.post('/', authRequired, adminRequired, async (req, res) => {
 });
 
 router.put('/:id', authRequired, adminRequired, async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = parseInt(req.params.id as string);
   const parsed = productSchema.partial().safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: parsed.error.flatten() });
   const product = await prisma.product.update({ where: { id }, data: parsed.data });
@@ -84,7 +84,7 @@ router.put('/:id', authRequired, adminRequired, async (req, res) => {
 });
 
 router.delete('/:id', authRequired, adminRequired, async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = parseInt(req.params.id as string);
   await prisma.product.delete({ where: { id } });
   res.json({ ok: true });
 });
